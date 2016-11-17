@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    <record model="ir.ui.view" id="product.product_template_only_form_view_inherited">
+            <field name="name">product.product_template_only_form_view_inh</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook/page[3]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[5]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[6]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//page[2]/separator[1]" position="replace">
+                </xpath>
+                <xpath expr="//page[2]/field[@name='seller_ids']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="attributes">
+                    <attribute name="hidden">True</attribute>
+                </xpath>      
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <div class="oe_button_box" name="button_box2">
+                        <button name="%(product.product_variant_action)d" type="action" icon="fa-sitemap" class="oe_stat_button" attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}" groups="product.group_product_variant">
+                        <field string="Variants" name="product_variant_count" widget="statinfo"/>
+                        </button>
+                        <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                         	<field name="active" widget="boolean_button"
+                                    options='{"terminology": "archive"}'/>
+                        </button>
+			           	<button class="oe_stat_button"
+			                name="%(stock.product_open_quants)d"
+			                icon="fa-building-o"
+			                type="action" attrs="{'invisible':[('type', '!=', 'product')]}">
+			                <!--field name="qty_available" widget="statinfo" string="On Hand"/-->
+			            </button>
+                    </div>
+                </xpath>                
+            </field>
+    </record>
+    <record id="product.product_template_only_form_view_inherited2" model="ir.ui.view">
+           <field name="name">product.product_template_only_form_view_inh2</field>
+           <field name="model">product.product</field>
+           <field name="inherit_id" ref="product.product_template_only_form_view_inherited"/>
+           <field name="arch" type="xml">
+           		<xpath expr="//div[@name='button_box2']" position="inside">
+		           	<button class="oe_stat_button"
+		                name="%(stock.product_open_quants)d"
+		                icon="fa-building-o"
+		                type="action" attrs="{'invisible':[('type', '!=', 'product')]}">
+		                <field name="qty_available" widget="statinfo" string="On Hand"/>
+		            </button>
+                </xpath>
+           </field>
+    </record> 
+    <!--record id="product.product_template_kanban_view_inherited" model="ir.ui.view">
+           <field name="name">product.product_template_kanban_view_inh</field>
+           <field name="model">product.template</field>
+           <field name="inherit_id" ref="product.product_template_kanban_view"/>
+           <field name="arch" type="xml">
+ 			<xpath expr="//field[@name='lst_price']" position="attributes">
+ 				<attribute name="hidden">True</attribute>
+ 			</xpath>
+           </field>
+
+    </record-->
+    <record id="product.template_product_tree_inherited" model="ir.ui.view">
+           <field name="name">product.template_product_tree_inh</field>
+           <field name="model">product.template</field>
+           <field name="inherit_id" ref="product.product_template_tree_view"/>
+           <field name="arch" type="xml">  
+           		<xpath expr="//field[@name='volume']" position="attributes">
+           			<attribute name="invisible">True</attribute>
+           		</xpath>
+           		<xpath expr="//field[@name='weight']" position="attributes">
+           			<attribute name="invisible">True</attribute>
+           		</xpath>
+           		<xpath expr="//field[@name='standard_price']" position="attributes">
+           			<attribute name="invisible">True</attribute>
+           		</xpath>
+           	</field>
+	</record>              
+    </data>
+</openerp>

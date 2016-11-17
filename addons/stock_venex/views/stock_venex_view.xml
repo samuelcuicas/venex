@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_stock_picking_form_inherited">
+        <field name="name">view_stock.picking.form_inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="correlativo_anterior"/>
+            </xpath>
+            <xpath expr="//page[2]" position="attributes">
+                <attribute name="string">Productos</attribute>
+            </xpath>
+            <xpath expr="//field[@name='group_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="attributes">
+                <attribute name="string">Origen</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                <attribute name="string">Destino</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_type']" position="attributes">
+                <attribute name="required">False</attribute>
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="required">False</attribute>
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="string">Tipo de Transferencia</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='extra']" position="inside">
+                <group col="4" colspan="4">
+                    <group col="2" string="Ubicación">
+                    <field name="estado_id" domain="[('country_id','=','Venezuela')]"/>
+                    <field name="municipio_id" domain="[('res_country_state_id','=',[estado_id])]"/>
+                    <field name="parroquia_id" domain="[('municipio_id','=',[municipio_id])]" />
+                    <field name="direccion_entrega" />
+                    <field name="punto_referencia" />
+                    </group>
+                    <group col="2" string="Contacto">
+                    <field name="nombre_contacto" />
+                    <field name="telefono_contacto" />
+                    </group>
+                </group>
+            </xpath>
+
+
+
+            <xpath expr="//page[@name='extra']" position="after">
+                <page string="Vehículo">
+                    <group col="4" colspan="4">
+                        <group col="2" string="Vehículo">
+                            <field name="vehiculo_id"/>
+                        </group>
+                        <group col="2" string="Conductor">
+                            <field name="conductor_id" />
+                        </group>
+                    </group>
+                </page>
+                <page string="Observaciones">
+                    <field name="observaciones" nolabel="True"/>
+                </page>
+                <page string="Eventos">
+                    <field name="eventos_ids"/>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+
+        <record model="ir.ui.view" id="venex_stock_eventos_tree_view">
+            <field name="name">venex_stock_eventos.tree</field>
+            <field name="model">stock.picking.eventos</field>
+            <field name="arch" type="xml">
+                <tree string="Eventos Tree">
+                    <field name="fecha"/>
+                    <field name="titulo"/>
+                    <field name="descripcion"/>
+                    <field name="usuario_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="venex_stock_eventos_form_view">
+            <field name="name">venex_stock_eventos.form</field>
+            <field name="model">stock.picking.eventos</field>
+            <field name="arch" type="xml">
+                <form string="Eventos Form">
+                        <group col="4">
+                            <field name="fecha" readonly="True"/>
+                            <field name="usuario_id" readonly="True"/>
+                            <field name="titulo"/>
+                            <field name="descripcion"/>
+                        </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="venex_stock_eventos_action">
+            <field name="name">Eventos</field>
+            <field name="res_model">stock.picking.eventos</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+</data>
+</openerp>
